@@ -23,21 +23,12 @@ It demonstrates user authentication, database management, and REST API developme
 
 ### Authentication & Users
 
-- User registration
-- User login
-- User logout
-- JWT authentication
-- Password hashing
+- User authentication with JWT
+- User account management (profile update, password change, account deletion)
 - Request and response validation with Pydantic
-- Automatic API documentation with Swagger/OpenAPI
+- Automatic API documentation (Swagger/OpenAPI)
 
 ## Planned Features
-
-### Users
-
-- Update user profile
-- Change password
-- Delete user account
 
 ### Products
 
