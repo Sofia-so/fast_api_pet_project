@@ -25,3 +25,15 @@ class UserCreateSchema(UserBaseSchema):
 
 class UserResponseSchema(UserBaseSchema):
     id: int
+
+
+class UserChangePasswordSchema(BaseSchema):
+    current_password: str
+    new_password: str
+    confirm_new_password: str
+
+    @model_validator(mode="after")
+    def confirm_password(self):
+        if self.new_password != self.confirm_new_password:
+            raise ValueError("Паролі не співпадають")
+        return self

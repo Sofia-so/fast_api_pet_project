@@ -13,7 +13,7 @@ from app.schemas.token_schema import TokenSchema
 from app.authen.oauth2_scheme import oauth2_scheme
 from app.services.auth_ser import auth_service
 
-auth_router = APIRouter(prefix="/users", tags=["Users"])
+auth_router = APIRouter(prefix="/auth", tags=["Auth"])
 
 
 @auth_router.post(
@@ -33,7 +33,10 @@ def register(
         user: UserCreateSchema,
         db: Session = Depends(get_db)
 ):
-    return auth_service.register(db, user)
+    return auth_service.register(
+        db=db,
+        user=user
+    )
 
 
 @auth_router.post(
@@ -52,7 +55,10 @@ def login(
         form_data: OAuth2PasswordRequestForm = Depends(),
         db: Session = Depends(get_db)
 ):
-    return auth_service.login(db, form_data)
+    return auth_service.login(
+        db=db,
+        form_data=form_data
+    )
 
 
 @auth_router.post(
@@ -70,4 +76,7 @@ def logout(
         token: str = Depends(oauth2_scheme),
         db: Session = Depends(get_db)
 ):
-    return auth_service.logout(db, token)
+    return auth_service.logout(
+        db=db,
+        token=token
+    )
