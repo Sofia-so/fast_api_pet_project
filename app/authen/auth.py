@@ -4,6 +4,7 @@ from fastapi import Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.db.session import get_db
 from app.db.model import User
+from app.db.model_enum import UserRole
 
 SECRET_KEY = "secret"
 ALGORITHM = "HS256"
@@ -41,3 +42,25 @@ def get_current_user(
         raise HTTPException(status_code=401, detail="Користувача не знайдено")
 
     return user
+
+
+def get_current_admin(
+    current_user: User = Depends(get_current_user)
+):
+    if current_user.role != UserRole.ADMIN:
+        raise HTTPException(
+            status_code=403,
+            detail="Недостатньо прав доступу"
+        )
+    return current_user
+
+
+def get_current_employee(
+        current_user: User = Depends(get_current_user)
+):
+    if current_user.role != UserRole.EMPLOYEE:
+        raise HTTPException(
+            status_code=403,
+            detail="Недостатньо прав доступу"
+        )
+    return current_user

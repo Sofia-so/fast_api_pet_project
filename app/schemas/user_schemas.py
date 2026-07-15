@@ -3,6 +3,7 @@ from pydantic import (
     model_validator
 )
 from app.schemas.base_schema import BaseSchema
+from app.db.model_enum import UserRole
 
 
 class UserBaseSchema(BaseSchema):
@@ -25,6 +26,14 @@ class UserCreateSchema(UserBaseSchema):
 
 class UserResponseSchema(UserBaseSchema):
     id: int
+    role: UserRole
+
+
+class UserUpdateSchema(BaseSchema):
+    first_name: str | None = None
+    last_name: str | None = None
+    username: str | None = None
+    email: EmailStr | None = None
 
 
 class UserChangePasswordSchema(BaseSchema):

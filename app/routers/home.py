@@ -5,7 +5,7 @@ home_router = APIRouter(prefix="/home")
 
 
 @home_router.get(
-    "/home_page",
+    "/",
     status_code=200,
     response_model=MessageResponseSchema,
     summary="Головна сторінка API",

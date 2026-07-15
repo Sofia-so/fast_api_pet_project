@@ -11,7 +11,7 @@ from app.schemas.user_schemas import (
 from app.schemas.token_schema import TokenSchema
 
 from app.authen.oauth2_scheme import oauth2_scheme
-from app.services.auth_ser import auth_service
+from app.services.auth_servc import auth_service
 
 auth_router = APIRouter(prefix="/auth", tags=["Auth"])
 

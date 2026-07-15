@@ -1,6 +1,7 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordRequestForm
+from sqlalchemy.exc import IntegrityError
 
 from app.authen.auth_passlib import (
     hash_password,
@@ -11,6 +12,7 @@ from app.schemas.user_schemas import UserCreateSchema
 from app.schemas.message_schema import MessageResponseSchema
 
 from app.authen.auth import create_token
+from app.db.model_enum import UserRole
 
 
 class AuthService:
@@ -31,7 +33,8 @@ class AuthService:
             last_name=user.last_name,
             username=user.username,
             email=user.email,
-            password=hash_password(user.password)
+            password=hash_password(user.password),
+            role=UserRole.CLIENT
         )
 
         try:
@@ -40,11 +43,17 @@ class AuthService:
             db.refresh(new_user)
             return new_user
 
-        except Exception:
+        except IntegrityError:
             db.rollback()
             raise HTTPException(
                 status_code=400,
                 detail="Користувач з таким ім'ям або email вже існує."
+            )
+        except Exception:
+            db.rollback()
+            raise HTTPException(
+                status_code=500,
+                detail="Помилка на сервері"
             )
 
     def login(

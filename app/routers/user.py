@@ -4,19 +4,19 @@ from sqlalchemy.orm import Session
 from app.schemas.user_schemas import (
     UserResponseSchema,
     UserChangePasswordSchema,
-    UserBaseSchema
+    UserUpdateSchema
 )
 from app.schemas.message_schema import MessageResponseSchema
 from app.db.session import get_db
 from app.authen.auth import get_current_user
 from app.db.model import User
-from app.services.user_ser import user_service
+from app.services.user_servc import user_service
 
 user_router = APIRouter(prefix="/users", tags=["Users"])
 
 
 @user_router.patch(
-    "/change_password",
+    "/password",
     response_model=MessageResponseSchema,
     status_code=200,
     summary="Змінити пароль користувача",
@@ -50,7 +50,7 @@ def change_password(
     """
 )
 def update_user(
-        user_data: UserBaseSchema,
+        user_data: UserUpdateSchema,
         db: Session = Depends(get_db),
         current_user: User = Depends(get_current_user)
 ):

@@ -48,11 +48,10 @@ class UserService:
             current_user: User,
             user_data: UserBaseSchema
     ):
+        update_data = user_data.model_dump(exclude_unset=True)
         try:
-            current_user.first_name = user_data.first_name
-            current_user.last_name = user_data.last_name
-            current_user.username = user_data.username
-            current_user.email = str(user_data.email)
+            for key, values in update_data.items():
+                setattr(current_user, key, values)
 
             db.commit()
             db.refresh(current_user)
