@@ -21,19 +21,15 @@ It demonstrates user authentication, database management, and REST API developme
 
 ## Current Features
 
-### Authentication & Users
-
-- User authentication with JWT
+- JWT-based authentication and authorization
 - User account management (profile update, password change, account deletion)
-- Request and response validation with Pydantic
-- Automatic API documentation (Swagger/OpenAPI)
+- Product management with CRUD operations
+- Product categorization and search by name
+- Role-based access control (admins and employees have different permissions)
+- Request and response validation using Pydantic
+- Interactive API documentation with Swagger/OpenAPI
 
 ## Planned Features
-
-### Products
-
-- Product management (CRUD)
-- Product catalog
 
 ### Orders
 
