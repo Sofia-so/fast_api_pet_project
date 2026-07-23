@@ -74,6 +74,7 @@ Create a `.env` file in the project root:
 ```env
 DATABASE_URL=postgresql+psycopg://username:password@localhost:5432/database_name
 SECRET_KEY=your_secret_key
+ADMIN_PASSWORD=your_admin_password
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
 ```
