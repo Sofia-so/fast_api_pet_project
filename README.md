@@ -25,18 +25,76 @@ It demonstrates user authentication, database management, and REST API developme
 - User account management (profile update, password change, account deletion)
 - Product management with CRUD operations
 - Product categorization and search by name
-- Role-based access control (admins and employees have different permissions)
+- Order management (create, view, update status, and cancel orders)
+- Automatic total price calculation and inventory updates when orders are created or cancelled
+- Role-based access control (admins, employees, and customers have different permissions)
 - Request and response validation using Pydantic
 - Interactive API documentation with Swagger/OpenAPI
 
-## Planned Features
+## Requirements
 
-### Orders
+- Python 3.12+
+- PostgreSQL
+  
+## Installation and Running
 
-- Create orders
-- Add products to orders
-- View user orders
-- Order history
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Sofia-so/fast_api_pet_project.git
+cd fast_api_pet_project
+```
+
+### 2. Create and activate a virtual environment
+
+**Windows**
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+```
+
+**Linux/macOS**
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+### 3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Configure environment variables
+
+Create a `.env` file in the project root:
+
+```env
+DATABASE_URL=postgresql+psycopg://username:password@localhost:5432/database_name
+SECRET_KEY=your_secret_key
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
+```
+
+### 5. Run database migrations
+
+```bash
+alembic upgrade head
+```
+
+### 6. Start the application
+
+```bash
+uvicorn app.main:app --reload
+```
+
+The API will be available at:
+
+- API: http://127.0.0.1:8000
+- Swagger UI: http://127.0.0.1:8000/docs
+- ReDoc: http://127.0.0.1:8000/redoc
 
 ## Author
 
