@@ -6,6 +6,7 @@ from app.routers.user import user_router
 from app.routers.admin import admin_router
 from app.routers.category import category_router
 from app.routers.product import product_router
+from app.routers.order import order_router
 
 app = FastAPI(
     title="API",
@@ -20,4 +21,5 @@ app.include_router(root_router)
 app.include_router(user_router)
 app.include_router(admin_router)
 app.include_router(category_router)
+app.include_router(order_router)
 app.include_router(product_router)

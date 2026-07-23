@@ -14,7 +14,7 @@ from app.db.model import User
 from app.authen.auth import get_current_admin
 from app.services.category_servc import category_service
 
-category_router = APIRouter(prefix="/category", tags=["Categories"])
+category_router = APIRouter(prefix="/categories", tags=["Categories"])
 
 
 @category_router.post(

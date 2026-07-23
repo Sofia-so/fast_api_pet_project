@@ -11,7 +11,7 @@ from app.authen.auth import get_current_worker
 from app.db.model import User
 from app.services.product_servc import product_service
 
-product_router = APIRouter(prefix="/product", tags=["Products"])
+product_router = APIRouter(prefix="/products", tags=["Products"])
 
 
 @product_router.post(
