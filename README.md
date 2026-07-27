@@ -31,6 +31,10 @@ It demonstrates user authentication, database management, and REST API developme
 - Request and response validation using Pydantic
 - Interactive API documentation with Swagger/OpenAPI
 
+## Database Diagram
+
+![Database Diagram](images/erd.png)
+
 ## Requirements
 
 - Python 3.12+
