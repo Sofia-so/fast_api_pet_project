@@ -1,5 +1,6 @@
 from app.db.engine import SessionLocal
 
+
 def get_db():
     db = SessionLocal()
     try:
