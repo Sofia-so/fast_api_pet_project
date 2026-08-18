@@ -7,6 +7,11 @@ from app.main import app
 from tests.override_get_db import override_get_db
 from app.db.session import get_db
 from app.config import settings
+from tests.common_fixture import (
+    create_users,
+    login_user
+)
+from tests.services import auth_service
 
 
 @pytest.fixture
@@ -33,3 +38,8 @@ def init_db():
     yield
 
     command.downgrade(alembic_cfg, "base")
+
+
+@pytest.fixture
+def db():
+    yield from override_get_db()

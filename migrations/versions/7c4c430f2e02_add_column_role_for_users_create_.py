@@ -6,6 +6,7 @@ Create Date: 2026-07-15 14:48:01.881271
 
 """
 from typing import Sequence, Union
+from sqlalchemy.dialects import postgresql
 
 from alembic import op
 import sqlalchemy as sa
@@ -71,4 +72,12 @@ def downgrade() -> None:
     user_role.drop(op.get_bind(), checkfirst=True)
     op.drop_table('products')
     op.drop_table('categories')
+    product_status = postgresql.ENUM(
+        "available",
+        "out_of_stock",
+        "on_the_way",
+        name="productstatus"
+    )
+
+    product_status.drop(op.get_bind(), checkfirst=True)
     # ### end Alembic commands ###

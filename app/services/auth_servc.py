@@ -46,7 +46,7 @@ class AuthService:
         except IntegrityError:
             db.rollback()
             raise HTTPException(
-                status_code=400,
+                status_code=409,
                 detail="Користувач з таким ім'ям або email вже існує."
             )
         except Exception:

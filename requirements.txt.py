@@ -14,3 +14,8 @@ bcrypt==4.0.1
 
 python-multipart==0.0.32
 email-validator==2.3.0
+
+httpx2==2.12.0
+pydantic-settings==2.15.0
+
+pytest==9.1.1
