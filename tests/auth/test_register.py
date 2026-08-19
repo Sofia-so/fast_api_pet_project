@@ -115,6 +115,5 @@ def test_register_passwords_d_not_match(
         }
     )
     response_json = response.json()
-    print(response_json)
     assert response.status_code == 422
     assert "Паролі не співпадають" in response_json["detail"][0]["msg"]

@@ -7,11 +7,14 @@ from app.main import app
 from tests.override_get_db import override_get_db
 from app.db.session import get_db
 from app.config import settings
-from tests.common_fixture import (
+from tests.fixtures import (
     create_users,
-    login_user
+    create_categories,
+    create_products,
+    create_order
 )
-from tests.services import auth_service
+from tests.services import auth_service, user_service
+from tests.login_fixtures import login_user
 
 
 @pytest.fixture

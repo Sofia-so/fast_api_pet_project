@@ -26,6 +26,10 @@ class UserCreateSchema(UserBaseSchema):
 
 class UserResponseSchema(UserBaseSchema):
     id: int
+    first_name: str
+    last_name: str
+    username: str
+    email: EmailStr
     role: UserRole
 
 

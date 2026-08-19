@@ -3,7 +3,6 @@ from sqlalchemy.exc import SQLAlchemyError
 from fastapi import HTTPException, status
 from decimal import Decimal
 from sqlalchemy import select
-import logging
 
 from app.schemas.order_schemas import (
     OrderCreateSchema,
@@ -22,8 +21,7 @@ from app.db.model_enum import (
     OrderStatus
 )
 from app.constants import allowed_transitions
-
-logger = logging.getLogger(__name__)
+from app.logger import logger
 
 
 class OrderService:

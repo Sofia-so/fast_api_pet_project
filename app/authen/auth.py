@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from app.db.session import get_db
 from app.db.model import User
 from app.db.model_enum import UserRole
+from app.authen.oauth2_scheme import oauth2_scheme
 
 SECRET_KEY = "secret"
 ALGORITHM = "HS256"
@@ -19,7 +20,7 @@ def create_token(user):
 
 
 def get_current_user(
-    token: str,
+    token: str = Depends(oauth2_scheme),
     db: Session = Depends(get_db)
 ):
     try:
@@ -32,6 +33,8 @@ def get_current_user(
 
         if user_id is None:
             raise HTTPException(status_code=401, detail="Invalid token")
+
+        user_id = int(user_id)
 
     except JWTError:
         raise HTTPException(status_code=401, detail="Invalid token")

@@ -1,15 +1,19 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
+from sqlalchemy.exc import IntegrityError
 
 from app.schemas.user_schemas import (
     UserChangePasswordSchema,
-    UserBaseSchema
+    UserUpdateSchema
 )
 from app.authen.auth_passlib import (
     verify_password,
     hash_password
 )
 from app.db.model import User
+from app.logger import logger
+
+
 
 
 class UserService:
@@ -46,7 +50,7 @@ class UserService:
             self,
             db: Session,
             current_user: User,
-            user_data: UserBaseSchema
+            user_data: UserUpdateSchema
     ):
         update_data = user_data.model_dump(exclude_unset=True)
         try:
@@ -60,12 +64,19 @@ class UserService:
                 "message": "Дані користувача успішно оновлено."
             }
 
-        except Exception:
+        except IntegrityError:
             db.rollback()
+            logger.exception("IntegrityError")
             raise HTTPException(
-                status_code=400,
+                status_code=409,
                 detail="Користувач з таким ім'ям або email вже існує."
             )
+        except Exception:
+            db.rollback()
+            logger.exception("Failed to update user")
+            raise HTTPException(
+                status_code=500,
+                detail="Не вдалося видалити акаунт.")
 
     def profile(
             self,
@@ -85,8 +96,17 @@ class UserService:
             return {
                 "message": "Акаунт успішно видалено"
             }
+        except IntegrityError:
+            db.rollback()
+            logger.exception("IntegrityError")
+            raise HTTPException(
+                status_code=409,
+                detail="Неможна видалити акаунт, "
+                       "оскільки на ньому є активні замовлення"
+            )
         except Exception:
             db.rollback()
+            logger.exception("Failed to delete user")
             raise HTTPException(
                 status_code=500,
                 detail="Не вдалося видалити акаунт.")
