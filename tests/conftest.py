@@ -13,8 +13,15 @@ from tests.fixtures import (
     create_products,
     create_order
 )
-from tests.services import auth_service, user_service
-from tests.login_fixtures import login_user
+from tests.services import (
+    auth_service,
+    user_service,
+    admin_service
+)
+from tests.login_fixtures import (
+    login_user,
+    login_admin
+)
 
 
 @pytest.fixture

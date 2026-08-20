@@ -62,5 +62,8 @@ def get_current_worker(
     current_user: User = Depends(get_current_user),
 ):
     if current_user.role not in [UserRole.ADMIN, UserRole.EMPLOYEE]:
-        raise HTTPException(status_code=403, detail="Недостатньо прав доступу")
+        raise HTTPException(
+            status_code=403,
+            detail="Недостатньо прав доступу"
+        )
     return current_user
