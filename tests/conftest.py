@@ -16,11 +16,13 @@ from tests.fixtures import (
 from tests.services import (
     auth_service,
     user_service,
-    admin_service
+    admin_service,
+    category_service
 )
 from tests.login_fixtures import (
     login_user,
-    login_admin
+    login_admin,
+    login_employee
 )
 
 

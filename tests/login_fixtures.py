@@ -25,3 +25,16 @@ def login_admin(client):
     )
     token = response.json()["access_token"]
     return {"Authorization": f"Bearer {token}"}
+
+
+@pytest.fixture(scope="function")
+def login_employee(client):
+    response = client.post(
+        "/auth/login",
+        data={
+            "username": "test_employee",
+            "password": "strong password"
+        }
+    )
+    token = response.json()["access_token"]
+    return {"Authorization": f"Bearer {token}"}

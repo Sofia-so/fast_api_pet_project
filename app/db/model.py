@@ -72,7 +72,10 @@ class Category(Base):
         nullable=False
     )
     description: Mapped[str | None] = mapped_column(nullable=True)
-    products: Mapped[list["Product"]] = relationship(back_populates="category")
+    products: Mapped[list["Product"]] = relationship(
+        back_populates="category",
+        passive_deletes=True
+    )
 
     def __repr__(self):
         return f"Category name - {self.name}"

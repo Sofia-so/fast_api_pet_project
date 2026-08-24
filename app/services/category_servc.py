@@ -37,7 +37,7 @@ class CategoryService:
             db: Session
     ):
         categories = db.scalars(
-            select(Category)
+            select(Category).order_by(Category.name)
         ).all()
         return categories
 
@@ -49,6 +49,7 @@ class CategoryService:
         return db.scalars(
             select(Category)
             .where(Category.name.ilike(f"%{query}%"))
+            .order_by(Category.name)
             .limit(10)
         ).all()
 

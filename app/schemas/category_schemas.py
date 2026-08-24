@@ -8,6 +8,8 @@ class CategoryCreateSchema(BaseSchema):
 
 class CategoryResponseSchema(CategoryCreateSchema):
     id: int
+    name: str
+    description: str | None = None
 
 
 class CategoryUpdateSchema(BaseSchema):
