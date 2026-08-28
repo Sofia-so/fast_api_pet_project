@@ -45,7 +45,7 @@ def create_product(
     summary="Отримати всі продукти",
     description="Повертає список всіх продуктів"
 )
-def get_product(
+def get_products(
         db: Session = Depends(get_db)
 ):
     return product_service.get_products(db=db)

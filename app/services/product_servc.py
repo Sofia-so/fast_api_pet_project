@@ -43,7 +43,7 @@ class ProductService:
             db: Session,
     ):
         products = db.scalars(
-            select(Product)
+            select(Product).order_by(Product.name)
         ).all()
         return products
 
@@ -54,8 +54,8 @@ class ProductService:
     ):
         products = db.scalars(
             select(Product).where(Product.name.ilike(
-                f"%{query}%")
-            ).limit(10)
+                f"%{query}%"))
+            .order_by(Product.name).limit(10)
         ).all()
         return products
 
@@ -113,10 +113,10 @@ class ProductService:
             db.rollback()
             raise HTTPException(
                 status_code=409,
-                detail="""
-                Неможливо видалити продукт,
-                скільки він використовується в замовленнях.
-                """
+                detail=(
+                    "Неможливо видалити продукт, "
+                    "оскільки він використовується в замовленнях."
+                )
             )
 
 

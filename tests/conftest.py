@@ -17,7 +17,8 @@ from tests.services import (
     auth_service,
     user_service,
     admin_service,
-    category_service
+    category_service,
+    product_service
 )
 from tests.login_fixtures import (
     login_user,

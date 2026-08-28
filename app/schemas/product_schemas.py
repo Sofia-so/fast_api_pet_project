@@ -15,6 +15,12 @@ class ProductCreateSchema(BaseSchema):
 
 class ProductResponseSchema(ProductCreateSchema):
     id: int
+    name: str
+    description: str | None = None
+    price: Decimal = Field(gt=0, decimal_places=2)
+    status: ProductStatus
+    quantity: int
+    category_id: int
 
 
 class ProductUpdateSchema(BaseSchema):
