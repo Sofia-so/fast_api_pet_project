@@ -34,15 +34,13 @@ class OrderService:
     ):
         order_data = data.model_dump(exclude={"items"})
 
+        total_price = Decimal("0.00")
+
         order = Order(
             **order_data,
             number=generate_order_number(),
             user_id=user.id
         )
-
-        total_price = Decimal("0.00")
-
-        db.add(order)
 
         for item in data.items:
             product = db.scalar(
@@ -71,6 +69,7 @@ class OrderService:
             )
 
             order.items.append(order_item)
+
             total_price += item.quantity * product.price
 
             product.quantity -= item.quantity
@@ -79,6 +78,8 @@ class OrderService:
                 product.status = ProductStatus.OUT_OF_STOCK
 
         order.total_price = total_price
+
+        db.add(order)
 
         try:
             db.commit()
@@ -125,7 +126,8 @@ class OrderService:
             if order.status == OrderStatus.SHIPPED:
                 raise HTTPException(
                     status_code=status.HTTP_409_CONFLICT,
-                    detail="Замовлення не можна скасувати, оскільки його вже відправлено."
+                    detail="Замовлення не можна скасувати, "
+                           "оскільки його вже відправлено."
                 )
 
             if order.status == OrderStatus.CANCELLED:
@@ -194,7 +196,8 @@ class OrderService:
         orders = db.scalars(
             select(Order).where(
                 Order.number.ilike(f"%{query}%")
-            ).limit(10)
+            )
+            .order_by(Order.created_at.desc()).limit(10)
         ).all()
 
         return orders

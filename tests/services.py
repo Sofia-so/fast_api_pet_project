@@ -5,6 +5,7 @@ from app.services.user_servc import UserService
 from app.services.admin_servc import AdminService
 from app.services.category_servc import CategoryService
 from app.services.product_servc import ProductService
+from app.services.order_servc import OrderService
 
 
 @pytest.fixture
@@ -30,3 +31,8 @@ def category_service():
 @pytest.fixture
 def product_service():
     return ProductService()
+
+
+@pytest.fixture
+def order_service():
+    return OrderService()

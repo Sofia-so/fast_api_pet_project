@@ -57,11 +57,6 @@ def create_users(db):
     ])
     db.commit()
 
-    yield
-
-    db.execute(delete(User))
-    db.commit()
-
 
 @pytest.fixture(scope="function", autouse=True)
 def create_categories(db):
@@ -77,11 +72,6 @@ def create_categories(db):
     )
 
     db.add_all([category1, category2])
-    db.commit()
-
-    yield
-
-    db.execute(delete(Category))
     db.commit()
 
 
@@ -115,11 +105,6 @@ def create_products(db):
     )
 
     db.add_all([product1, product2])
-    db.commit()
-
-    yield
-
-    db.execute(delete(Product))
     db.commit()
 
 
@@ -163,8 +148,17 @@ def create_order(db):
     db.add(order)
     db.commit()
 
+    return order
+
+
+@pytest.fixture(autouse=True)
+def cleanup(db):
     yield
 
     db.execute(delete(OrderItem))
     db.execute(delete(Order))
+    db.execute(delete(Product))
+    db.execute(delete(Category))
+    db.execute(delete(User))
+
     db.commit()
