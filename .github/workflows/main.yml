@@ -2,23 +2,21 @@ name: Tests
 
 on:
   push:
-    branches: [master]
-
+    branches: [ "main", "master" ]
   pull_request:
-    branches: [master]
-
-  workflow_dispatch:   
+    branches: [ "main", "master" ]
+  workflow_dispatch:
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    
-services:
+
+    services:
       postgres:
         image: postgres:15
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: 769011
+          POSTGRES_PASSWORD: "769011"
           POSTGRES_DB: db_fast_api
         ports:
           - 5432:5432
@@ -27,26 +25,26 @@ services:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-    
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt 
+          pip install -r requirements.txt
 
       - name: Run tests
         env:
           PYTHONPATH: .
           DATABASE_URI: postgresql+psycopg://postgres:769011@localhost:5432/db_fast_api
-          TEST_DATABASE_URI: postgresql+psycopg://postgres:769011@localhost:5432/test_db_fast_api
+          TEST_DATABASE_URI: postgresql+psycopg://postgres:769011@localhost:5432/db_fast_api
           SECRET_KEY: my_secret_key
           ADMIN_PASSWORD: storeadmin34
         run: |
