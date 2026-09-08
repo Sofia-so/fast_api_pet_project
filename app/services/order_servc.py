@@ -238,7 +238,7 @@ class OrderService:
             raise HTTPException(
                 status_code=status.HTTP_409_CONFLICT,
                 detail=f"Не можна змінити статус з "
-                f"{order.status.value} на '{new_status.value}'."
+                f"'{order.status.value}' на '{new_status.value}'."
             )
 
         try:
