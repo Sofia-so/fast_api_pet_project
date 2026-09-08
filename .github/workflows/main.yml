@@ -18,7 +18,7 @@ services:
         image: postgres:15
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: testpassword
+          POSTGRES_PASSWORD: 769011
           POSTGRES_DB: db_fast_api
         ports:
           - 5432:5432
