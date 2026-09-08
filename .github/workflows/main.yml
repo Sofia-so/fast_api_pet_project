@@ -28,5 +28,11 @@ jobs:
           pip install -r requirements.txt 
 
       - name: Run tests
+        env:
+          PYTHONPATH: .
+          DATABASE_URI: postgresql+psycopg://postgres:769011@localhost:5432/db_fast_api
+          TEST_DATABASE_URI: postgresql+psycopg://postgres:769011@localhost:5432/test_db_fast_api
+          SECRET_KEY: my_secret_key
+          ADMIN_PASSWORD: storeadmin34
         run: |
           python -m pytest
