@@ -5,8 +5,6 @@ A RESTful API for an online store built with FastAPI.
 This project is a new implementation of my Online Store REST API using FastAPI.
 It demonstrates user authentication, database management, and REST API development with modern Python technologies.
 
- **Project Status:** In Progress
-
 ## Technologies
 
 - Python
@@ -17,7 +15,9 @@ It demonstrates user authentication, database management, and REST API developme
 - Pydantic
 - JWT Authentication
 - Swagger/OpenAPI
+- Pytest
 - Git
+- GitHub Actions
 
 ## Current Features
 
@@ -30,6 +30,12 @@ It demonstrates user authentication, database management, and REST API developme
 - Role-based access control (admins, employees, and customers have different permissions)
 - Request and response validation using Pydantic
 - Interactive API documentation with Swagger/OpenAPI
+
+## Testing & CI
+
+The project includes automated tests using Pytest covering the main API functionality, including authentication, users, products, categories, orders, and role-based access control.
+
+Tests are automatically run with GitHub Actions on pushes and pull requests to the `master` branch. The workflow also supports manual execution.
 
 ## Database Diagram
 
