@@ -15,9 +15,9 @@ jobs:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: "769011"
-          POSTGRES_DB: test_db_fast_api
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.TEST_POSTGRES_DB }}
         ports:
           - 5432:5432
         options: >-
@@ -43,9 +43,27 @@ jobs:
       - name: Run tests
         env:
           PYTHONPATH: .
-          DATABASE_URI: postgresql+psycopg://postgres:769011@localhost:5432/db_fast_api
-          TEST_DATABASE_URI: postgresql+psycopg://postgres:769011@localhost:5432/test_db_fast_api
-          SECRET_KEY: my_secret_key
-          ADMIN_PASSWORD: storeadmin34
+          DATABASE_URI: ${{ secrets.DATABASE_URI }}
+          TEST_DATABASE_URI: ${{ secrets.TEST_DATABASE_URI }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
         run: |
           python -m pytest
+        
+      - name: Build Docker image
+        run: |
+          docker build -t fast-api-pet-project .
+
+      - name: Run Docker container
+        run: |
+          docker run -d \
+            --name fast-api-pet-project \
+            -p 8000:8000 \
+            fast-api-pet-project
+
+      - name: Check Docker container
+        run: |
+          sleep 5
+          docker ps -a
+          docker logs fast-api-pet-project
+          test "$(docker inspect -f '{{.State.Running}}' fast-api-pet-project)" = "true"
