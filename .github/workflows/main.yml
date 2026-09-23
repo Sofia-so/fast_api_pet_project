@@ -44,7 +44,7 @@ jobs:
         env:
           PYTHONPATH: .
           DATABASE_URI: ${{ secrets.DATABASE_URI }}
-          TEST_DATABASE_URI: ${{ secrets.TEST_DATABASE_URI }}
+          TEST_DATABASE_URI: postgresql+psycopg://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.TEST_POSTGRES_DB }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
         run: |
