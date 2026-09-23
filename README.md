@@ -18,6 +18,8 @@ It demonstrates user authentication, database management, and REST API developme
 - Pytest
 - Git
 - GitHub Actions
+- Docker/ Docker Hub
+- Render
 
 ## Current Features
 
@@ -30,12 +32,24 @@ It demonstrates user authentication, database management, and REST API developme
 - Role-based access control (admins, employees, and customers have different permissions)
 - Request and response validation using Pydantic
 - Interactive API documentation with Swagger/OpenAPI
+- Containerized application with Docker
+- Deployment on Render
 
 ## Testing & CI
 
 The project includes automated tests using Pytest covering the main API functionality, including authentication, users, products, categories, orders, and role-based access control.
 
 Tests are automatically run with GitHub Actions on pushes and pull requests to the `master` branch. The workflow also supports manual execution.
+
+## Deployment
+
+The application is deployed on Render.
+
+Live application:
+https://fast-api-pet-project.onrender.com
+
+Swagger UI:
+https://fast-api-pet-project.onrender.com/docs
 
 ## Database Diagram
 
@@ -82,7 +96,7 @@ pip install -r requirements.txt
 Create a `.env` file in the project root:
 
 ```env
-DATABASE_URL=postgresql+psycopg://username:password@localhost:5432/database_name
+DATABASE_URI=postgresql+psycopg://username:password@localhost:5432/database_name
 SECRET_KEY=your_secret_key
 ADMIN_PASSWORD=your_admin_password
 ALGORITHM=HS256
@@ -106,6 +120,34 @@ The API will be available at:
 - API: http://127.0.0.1:8000
 - Swagger UI: http://127.0.0.1:8000/docs
 - ReDoc: http://127.0.0.1:8000/redoc
+
+## CI
+
+GitHub Actions is used for continuous integration.
+
+The CI pipeline:
+
+- Sets up a Python environment
+- Starts a PostgreSQL test database
+- Installs project dependencies
+- Runs database migrations
+- Executes the Pytest test suite
+
+## Docker
+
+The application is containerized with Docker.
+
+### Build the Docker image
+
+```bash
+docker build -t fast_api_pet_proj .
+```
+
+### Run the container
+
+```
+docker run --env-file .env -p 8000:8000 fast_api_pet_proj
+```
 
 ## Author
 
