@@ -49,16 +49,25 @@ jobs:
           ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
         run: |
           python -m pytest
-        
+
       - name: Build Docker image
         run: |
           docker build -t fast-api-pet-project .
 
       - name: Run Docker container
+        env:
+          DATABASE_URI: postgresql+psycopg://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.TEST_POSTGRES_DB }}
+          TEST_DATABASE_URI: postgresql+psycopg://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@localhost:5432/${{ secrets.TEST_POSTGRES_DB }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
         run: |
           docker run -d \
             --name fast-api-pet-project \
-            -p 8000:8000 \
+            --network host \
+            -e DATABASE_URI="$DATABASE_URI" \
+            -e TEST_DATABASE_URI="$TEST_DATABASE_URI" \
+            -e SECRET_KEY="$SECRET_KEY" \
+            -e ADMIN_PASSWORD="$ADMIN_PASSWORD" \
             fast-api-pet-project
 
       - name: Check Docker container
@@ -67,3 +76,4 @@ jobs:
           docker ps -a
           docker logs fast-api-pet-project
           test "$(docker inspect -f '{{.State.Running}}' fast-api-pet-project)" = "true"
+          curl --fail http://localhost:8000/docs
